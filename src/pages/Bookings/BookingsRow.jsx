@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 
 const BookingsRow = ({ booking, handleDelete, handleBookingConfirm }) => {
-    console.log(booking);
+    // console.log(booking);
 
     const { _id, img, price, service_id, customerName, date, service, status } = booking;
 

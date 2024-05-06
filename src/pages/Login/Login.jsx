@@ -1,12 +1,13 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import img from '../../assets/images/login/login.svg';
-import { useContext } from 'react';
-import { AuthContext } from '../../providers/AuthProvider';
+// import { useContext } from 'react';
+// import { AuthContext } from '../../providers/AuthProvider';
 import axios from 'axios';
+import useAuth from '../../hooks/useAuth';
 
 const Login = () => {
-
-    const { signIn } = useContext(AuthContext);
+    // const { signIn } = useContext(AuthContext);
+    const { signIn } = useAuth();
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -15,25 +16,24 @@ const Login = () => {
         const form = e.target;
         const email = form.email.value;
         const password = form.password.value;
-
         signIn(email, password)
             .then(result => {
                 const loggedInUser = result.user;
                 console.log(loggedInUser);
                 const user = { email };
-
                 // Get access token
-                axios.post('http://localhost:5000/jwt', user, { withCredentials: true })
+                axios.post('https://car-doctor-server-nine-ashen.vercel.app/jwt', user, { withCredentials: true })
                     .then(res => {
-                        console.log(res.data);
+                        // console.log(res.data);
                         if (res.data.success) {
                             navigate(location?.state ? location?.state : '/')
+                            alert('Logged in successful')
                         }
                     })
-
             })
             .catch(error => {
                 console.error(error);
+                alert('Something wrong')
             })
     }
 

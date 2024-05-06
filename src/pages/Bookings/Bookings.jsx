@@ -1,40 +1,40 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import BookingsRow from "./BookingsRow";
-import axios from "axios";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 
 const Bookings = () => {
-
     const { user } = useContext(AuthContext);
-
     const [bookings, setBookings] = useState([]);
+    const axiosSecure = useAxiosSecure();
 
-    const url = `http://localhost:5000/bookings?email=${user?.email}`;
+    // const url = `https://car-doctor-server-nine-ashen.vercel.app/bookings?email=${user?.email}`;
+    const url = `/bookings?email=${user?.email}`;
+
 
     useEffect(() => {
 
-        axios.get(url, { withCredentials: true })
+        // fetch(url)
+        //     .then(res => res.json())
+        //     .then(data => setBookings(data))
+
+        axiosSecure.get(url)
             .then(res => {
                 setBookings(res.data)
             })
 
-        // fetch(url)
-        //     .then(res => res.json())
-        //     .then(data => {
-        //         setBookings(data);
-        //     })
-    }, [url])
+    }, [url, axiosSecure])
 
     const handleDelete = (id) => {
         const proceed = confirm('Are you sure! You want to delete?')
         if (proceed) {
-            fetch(`http://localhost:5000/bookings/${id}`, {
+            fetch(`https://car-doctor-server-nine-ashen.vercel.app/bookings/${id}`, {
                 method: 'DELETE'
             })
                 .then(res => res.json())
                 .then(data => {
-                    console.log(data);
+                    // console.log(data);
                     if (data.deletedCount > 0) {
                         alert('Deleted Successful')
                         const remaining = bookings.filter(booking => booking._id !== id)
@@ -45,7 +45,7 @@ const Bookings = () => {
     }
 
     const handleBookingConfirm = (id) => {
-        fetch(`http://localhost:5000/bookings/${id}`, {
+        fetch(`https://car-doctor-server-nine-ashen.vercel.app/bookings/${id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -54,7 +54,7 @@ const Bookings = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
+                // console.log(data);
                 if (data.modifiedCount > 0) {
                     const remaining = bookings.filter(booking => booking._id !== id)
                     const updated = bookings.find(booking => booking._id == id)
