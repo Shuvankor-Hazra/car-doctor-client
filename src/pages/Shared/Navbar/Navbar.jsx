@@ -7,7 +7,7 @@ import useAuth from "../../../hooks/useAuth";
 
 const Navbar = () => {
     // const { user, logOut } = useContext(AuthContext);
-    const {user, logOut} = useAuth();
+    const { user, logOut } = useAuth();
 
     const handleLogOut = () => {
         logOut()
@@ -18,10 +18,10 @@ const Navbar = () => {
     }
 
     const navItems = <>
-        <li className="p-2 rounded-lg" ><NavLink to="/">Home</NavLink></li>
-        <li className="p-2 rounded-lg" ><NavLink to="/blog">Blog</NavLink></li>
-        <li className="p-2 rounded-lg" ><NavLink to="/contact">Contact</NavLink></li>
-        <li className="p-2 rounded-lg" ><NavLink to="/bookings">My Bookings</NavLink></li>
+        <li className="p-2 rounded-lg"><NavLink to="/">Home</NavLink></li>
+        <li className="p-2 rounded-lg"><NavLink to="/blog">Blog</NavLink></li>
+        <li className="p-2 rounded-lg"><NavLink to="/contact">Contact</NavLink></li>
+        <li className="p-2 rounded-lg"><NavLink to="/bookings">My Bookings</NavLink></li>
     </>
 
     return (
@@ -44,12 +44,11 @@ const Navbar = () => {
                     {navItems}
                 </ul>
             </div>
-            <div className="navbar-end">
+            <div className="navbar-end gap-2">
                 <Link to="/" className="btn btn-sm md:btn-md btn-outline bg-[#FF3811] text-white ">Appointment</Link>
                 {
                     user?.email ?
                         <Link onClick={handleLogOut} className="btn btn-sm md:btn-md btn-outline bg-[#FF3811] text-white ">Log Out</Link> :
-
                         <Link to="/login" className="btn btn-sm md:btn-md btn-outline bg-[#FF3811] text-white ">Login</Link>
                 }
             </div>
